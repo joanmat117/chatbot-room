@@ -1,41 +1,53 @@
+// src/components/ChatbotCard.tsx
 import { Link } from 'react-router-dom';
+import type { ReactNode } from 'react';
 
-// Definimos las propiedades que recibirá nuestra tarjeta
-interface ChatbotCardProps {
-  iconName: string;         // El nombre del icono de Remix Icon (ej: "ri-robot-2-line")
-  title: string;
-  description: string;
-  linkTo: string;           // La ruta a la que navegará (ej: "/chat/creative")
-  gradientColor: string;    // Las clases de Tailwind para el gradiente (ej: "from-blue-500 to-cyan-400")
+// --- Sub-componentes para Composición ---
+
+const Head = ({ children,icon }: { children: ReactNode, icon:string }) => (
+  <>
+  <div className='flex items-center gap-2 shadow rounded-3xl'>
+  <i className={`ri-${icon} text-slate-50 text-2xl transition-transform duration-300 flex items-center justify-center group-hover:scale-110 font-light border rounded-full size-10`}></i>
+  <h3 className="text-2xl font-bold text-slate-50">{children}</h3>
+  </div>
+  </>
+);
+
+const Description = ({ children }: { children: ReactNode }) => (
+  <p className="text-slate-100 flex-grow">{children}</p>
+);
+
+const Action = ({ children }: { children: ReactNode }) => (
+  <div className=" border-t py-1 px-2 rounded-full text-sm font-semibold text-slate-100 flex items-center transition-all shadow duration-300 ml-auto gap-x-2">
+    {children} <i className="ri-arrow-right-line transition-opacity duration-300"></i>
+  </div>
+);
+
+// --- Componente Principal ---
+
+type ChatbotCardProps = {
+  linkTo: string;
+  gradientColor: string;
+  children: ReactNode;
+};
+
+/**
+ * Tarjeta de presentación para un chatbot, construida con el patrón de composición.
+ * El estilo principal "outlined" se logra con un borde de gradiente.
+ */
+export function ChatbotCard({ linkTo, gradientColor, children }: ChatbotCardProps) {
+  return (
+    <article className={`rounded-xl bg-gradient-to-br ${gradientColor} shadow-md hover:shadow-xl hover:scale-95 transition duration-300`}>
+      <Link to={linkTo} className="group block h-full py-4 px-5 rounded-[15px]">
+        <div className="flex flex-col h-full gap-3">
+          {children}
+        </div>
+      </Link>
+    </article>
+  );
 }
 
-export const ChatbotCard: React.FC<ChatbotCardProps> = ({ iconName, title, description, linkTo, gradientColor }) => {
-  return (
-    // Usamos Link de react-router-dom para que toda la tarjeta sea un enlace
-    <Link 
-      to={linkTo} 
-      className={`
-        block p-8 rounded-2xl text-white shadow-lg 
-        bg-gradient-to-br ${gradientColor}
-        transform hover:-translate-y-2 hover:shadow-2xl 
-        transition-all duration-300 ease-in-out cursor-pointer
-      `}
-    >
-      <div className="flex flex-col h-full">
-        {/* Icono */}
-        <i className={`${iconName} text-5xl mb-4 opacity-80`}></i>
-        
-        {/* Título */}
-        <h3 className="text-2xl font-bold mb-2">{title}</h3>
-        
-        {/* Descripción */}
-        <p className="font-light text-base flex-grow">{description}</p>
-        
-        {/* "Call to action" al final */}
-        <div className="mt-6 font-semibold flex items-center">
-          Iniciar Chat <i className="ri-arrow-right-line ml-2"></i>
-        </div>
-      </div>
-    </Link>
-  );
-};
+// Asignamos los sub-componentes al componente principal
+ChatbotCard.Head = Head;
+ChatbotCard.Description = Description;
+ChatbotCard.Action = Action;

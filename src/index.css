@@ -1,1 +1,37 @@
 @import 'tailwindcss';
+
+@theme {
+    --color-primary-50: #fff0f3;
+    --color-primary-100: #ffe1e7;
+    --color-primary-200: #ffc8d5;
+    --color-primary-300: #ff9bb3;
+    --color-primary-400: #ff648c;
+    --color-primary-500: #ff2d69;
+    --color-primary-600: #f62268;
+    --color-primary-700: #cf014a;
+    --color-primary-800: #ad0446;
+    --color-primary-900: #930842;
+    --color-primary-950: #53001f;
+
+    --color-secondary-50: #f2f0ff;
+    --color-secondary-100: #e8e4ff;
+    --color-secondary-200: #d4cdff;
+    --color-secondary-300: #b6a5ff;
+    --color-secondary-400: #9372ff;
+    --color-secondary-500: #733aff;
+    --color-secondary-600: #6412ff;
+    --color-secondary-700: #5501ff;
+    --color-secondary-800: #4d00e8;
+    --color-secondary-900: #3c02b0;
+    --color-secondary-950: #210078;
+
+    --font-ubuntu: "Ubuntu", sans-serif;
+    --font-orbitron: "Orbitron", sans-serif;
+    --font-jura: "Jura";
+
+
+}
+
+html {
+    @apply bg-slate-100 font-ubuntu
+}

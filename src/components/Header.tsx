@@ -1,123 +1,106 @@
 // src/components/Header.tsx
 
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { NavItem } from './NavItem'; 
 
-export const Header: React.FC = () => {
+export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isChatbotsMenuOpen, setIsChatbotsMenuOpen] = useState(true);
   const location = useLocation();
 
-  // Efecto para cerrar el menú si cambia la ruta (navegación)
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
-
-  // Bloquea el scroll del body cuando el menú está abierto
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    // Función de limpieza para restaurar el scroll si el componente se desmonta
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+  // Efectos para controlar el cierre del menú y el scroll del body
+  useEffect(() => { setIsMenuOpen(false) }, [location.pathname]);
+  useEffect(() => { 
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto'; 
+    return () => { document.body.style.overflow = 'auto' }; 
   }, [isMenuOpen]);
-
-
-  const activeLinkStyle = {
-    color: '#8b5cf6',
-    fontWeight: '600',
-  };
-
-  const NavItem = ({ to, children }: { to: string, children: React.ReactNode }) => (
-    <NavLink
-      to={to}
-      style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
-      className="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-300"
-    >
-      {children}
-    </NavLink>
-  );
 
   return (
     <>
-      {/* ===== HEADER PRINCIPAL ===== */}
-      <header className={`sticky top-0 z-40 ${isMenuOpen? 'bg-transparent' : 'bg-white/80 backdrop-blur-sm shadow-sm'} `}>
-        <div className="container mx-auto flex justify-between items-center p-4">
-          
-          {/* --- Grupo Izquierdo: Menú Móvil y Logo --- */}
+      {/* --- BARRA SUPERIOR (HEADER) --- */}
+      <header className='sticky top-0 transition z-30 bg-slate-100'>
+        <div className="md:mx-14 mx-auto flex justify-between items-center p-4">
           <div className="flex items-center gap-4">
-            {/* Botón de Menú Móvil (Hamburguesa Animada) */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-3xl flex flex-col justify-around items-center z-50 relative"
-              aria-label="Abrir menú"
+            {/* Botón para abrir la sidebar */}
+            <button 
+              onClick={() => setIsMenuOpen(true)} 
+              className="text-2xl flex justify-center items-center z-50 relative rounded-full shadow border-primary-600 size-10 border-r-2" 
+              aria-label="Abrir menú" 
+              aria-expanded={isMenuOpen}
             >
-              <i className='ri-menu-fill'></i>
+              <i className='ri-menu-2-line'></i>
             </button>
-            
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <i className="ri-psychotherapy-line text-3xl bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-transparent bg-clip-text"></i>
-              <span className="text-2xl font-bold text-gray-800">ChatVerse</span>
+              <i className="ri-psychotherapy-line text-3xl text-primary-600"></i>
+              <span className="text-2xl font-orbitron font-bold text-slate-800">ChatVerse</span>
             </Link>
           </div>
-
-          {/* --- Navegación de Escritorio --- */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <NavItem to="/">Inicio</NavItem>
-            <NavItem to="/about">Acerca de</NavItem>
-            <NavItem to="/contact">Contacto</NavItem>
-          </nav>
-
-          {/* Botón Call to Action (visible solo en escritorio) */}
-          <Link to="/chat/creative" className="hidden md:inline-block px-5 py-2 bg-purple-600 text-white font-semibold rounded-full shadow-md hover:bg-purple-700 transition-all duration-300 transform hover:scale-105">
+          <Link 
+            to="/chat/creative" 
+            className="hidden md:inline-block px-5 py-2 border-2 border-primary-600 font-semibold rounded-full bg-primary-600 text-white hover:scale-95 hover:opacity-90 transition-all duration-300"
+          >
             Empezar
           </Link>
         </div>
       </header>
 
-      {/* ===== MENÚ LATERAL (SIDEBAR) PARA MÓVIL ===== */}
-      <div 
-        className={`fixed inset-0 z-30 transition-opacity duration-300 ease-in-out md:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-      >
-        {/* Overlay */}
-        <div 
-          onClick={() => setIsMenuOpen(false)} 
-          className="absolute inset-0 bg-black/50"
-          aria-hidden="true"
-        ></div>
+      {/* --- SIDEBAR (SIEMPRE DISPONIBLE AL HACER CLICK) --- */}
+      <div className={`fixed inset-0 z-40 transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        <div onClick={() => setIsMenuOpen(false)} className="absolute inset-0 bg-black/50" aria-hidden="true"></div>
+        
+        <aside className={`absolute top-0 left-0 h-full w-72 bg-white shadow-xl transition-transform duration-300 ease-in-out flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          {/* Cabecera de la Sidebar con el botón de cierre */}
+          <div className="p-4 border-b border-slate-200 flex justify-between items-center">
+            <Link 
+            to={"/"}
+            className='text-2xl font-orbitron font-bold text-slate-800'
+            >ChatVerse</Link>
+            <button 
+              onClick={() => setIsMenuOpen(false)}
+              className="text-2xl flex justify-center items-center z-50 relative rounded-full shadow border-primary-600 size-10 border-l-2"
+              aria-label="Cerrar menú"
+            >
+              <i className='ri-close-line'></i>
+            </button>
+          </div>
+          
+          {/* Contenedor de la navegación (con scroll) */}
+          <div className="flex-grow overflow-y-auto p-4">
+            <nav className="flex flex-col space-y-2 text-xl">
+              <NavItem icon='home-line' to="/">Inicio</NavItem>
+              <NavItem icon='article-line' to="/about">Acerca de</NavItem>
 
-        {/* Panel de la Sidebar */}
-        <aside className={`absolute top-0 left-0 h-full w-72 bg-white shadow-xl transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-          <div className="p-8 pt-20">
-            <nav className="flex flex-col space-y-2">
-              {['Inicio', 'Acerca de', 'Contacto'].map((item, index) => {
-                const to = `/${item === 'Inicio' ? '' : item.toLowerCase().replace(' ', '-')}`;
-                return (
-                  <NavLink
-                    key={item}
-                    to={to}
-                    className={`
-                      text-xl font-medium text-gray-700 p-3 rounded-lg hover:bg-purple-50 hover:text-purple-700
-                      transition-all duration-300
-                      ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'}
-                    `}
-                    style={({ isActive }) => ({
-                      ...{ transitionDelay: `${150 + index * 50}ms` },
-                      ...(isActive ? activeLinkStyle : {})
-                    })}
-                  >
-                    {item}
-                  </NavLink>
-                );
-              })}
+              {/* Menú Desplegable de Chatbots */}
+              <div className="text-lg">
+                <button
+                  onClick={() => setIsChatbotsMenuOpen(!isChatbotsMenuOpen)}
+                  className="flex items-center justify-between w-full text-left p-3 text-slate-600 hover:bg-slate-100 transition-colors duration-200 rounded-2xl shadow"
+                  aria-expanded={isChatbotsMenuOpen}
+                >
+                  <span className="font-semibold flex items-center gap-3"><i className='ri-robot-2-line text-primary-600'></i>Chatbots</span>
+                  <i className={`ri-arrow-down-s-line text-2xl transition-transform duration-300 ${isChatbotsMenuOpen ? 'rotate-180' : ''}`}></i>
+                </button>
+                
+                <div className={`grid transition-all duration-300 ease-in-out ${isChatbotsMenuOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                  <div className="overflow-hidden">
+                    <div className="flex flex-col gap-1 text-3xl pt-2 pl-3">
+                      <NavItem icon='compass-3-line' to="/chat/omni" className="text-base">Omni Assistant</NavItem>
+                      <NavItem icon='translate-2' to="/chat/language" className="text-base">Language Coach</NavItem>
+                      <NavItem icon='magic-line' to="/chat/creative" className="text-base">Creative Studio</NavItem>
+                      <NavItem icon='book-2-line' to="/chat/academic" className="text-base">Academic Pro</NavItem>
+                      <NavItem className='text-base' to='/chatbots'>Ver mas...</NavItem>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <NavItem icon='user-line' to="/contact">Contacto</NavItem>
             </nav>
           </div>
         </aside>
       </div>
     </>
   );
-};
+}
