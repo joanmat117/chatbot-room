@@ -37,7 +37,7 @@ type ChatbotCardProps = {
  */
 export function ChatbotCard({ linkTo, gradientColor, children }: ChatbotCardProps) {
   return (
-    <article className={`rounded-xl bg-gradient-to-br ${gradientColor} shadow-md hover:shadow-xl hover:scale-95 transition duration-300`}>
+    <article className={`rounded-xl bg-gradient-to-br ${gradientColor} shadow-md hover:shadow-xl hover:scale-95 transition`}>
       <Link to={linkTo} className="group block h-full py-4 px-5 rounded-[15px]">
         <div className="flex flex-col h-full gap-3">
           {children}
