@@ -30,7 +30,7 @@ export const NotFoundPage: React.FC = () => {
         
         {/* Texto descriptivo y amigable */}
         <p className="text-lg text-gray-600 max-w-md mx-auto mb-8">
-          Parece que te has perdido en el universo de los chats. La página que buscas no existe o ha sido movida.
+          Parece que te has perdido entre los chats. La página que buscas no existe o ha sido movida.
         </p>
         
         {/* Botón para volver al inicio */}
