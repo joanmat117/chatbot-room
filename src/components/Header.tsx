@@ -47,8 +47,8 @@ export function Header() {
       </header>
 
       {/* --- SIDEBAR (SIEMPRE DISPONIBLE AL HACER CLICK) --- */}
-      <div className={`fixed inset-0 z-40 transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div onClick={() => setIsMenuOpen(false)} className="absolute inset-0 bg-black/50" aria-hidden="true"></div>
+      <div className={`fixed inset-0 z-40 transition-all duration-300 ease-in-out ${isMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+        <div onClick={() => setIsMenuOpen(false)} className={`absolute transition inset-0 ${isMenuOpen? 'bg-black/50' : 'bg-transparent'}`} aria-hidden="true"></div>
         
         <aside className={`absolute top-0 left-0 h-full w-72 bg-slate-100 shadow-xl transition-transform duration-300 ease-in-out flex flex-col ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
           {/* Cabecera de la Sidebar con el botón de cierre */}

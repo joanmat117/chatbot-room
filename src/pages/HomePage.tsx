@@ -53,7 +53,7 @@ export function HomePage() {
               <ChatbotCard.Action>Abrir Asistente</ChatbotCard.Action>
             </ChatbotCard>
             
-            <Link className='h-full border rounded-xl shadow-md hover:shadow-xl hover:scale-95 bg-gradient-to-br font-orbitron from-slate-700 to-slate-600 transition flex items-center justify-center font-medium text-white text-2xl gap-4' to={'/chatbots'}>
+            <Link className='h-full border-2 border-dashed rounded-xl py-7 hover:scale-95 bg-transparent text-gray-900 font-orbitron  transition flex items-center justify-center font-medium text-2xl gap-4' to={'/chatbots'}>
             Ver Todos
             <i className='ri-arrow-right-double-fill'></i>
             </Link>
