@@ -55,7 +55,7 @@ Please change the parent <Route path="${V}"> to <Route path="${V==="/"?"*":`${V}
           text-8xl md:text-9xl font-extrabold mb-4
           bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 
           text-transparent bg-clip-text
-        `,children:"404"}),s.jsx("h2",{className:"text-3xl md:text-5xl font-bold mb-3",children:"¡Ups! Página no encontrada"}),s.jsx("p",{className:"text-lg text-gray-600 max-w-md mx-auto mb-8",children:"Parece que te has perdido en el universo de los chats. La página que buscas no existe o ha sido movida."}),s.jsxs(St,{to:"/",className:`
+        `,children:"404"}),s.jsx("h2",{className:"text-3xl md:text-5xl font-bold mb-3",children:"¡Ups! Página no encontrada"}),s.jsx("p",{className:"text-lg text-gray-600 max-w-md mx-auto mb-8",children:"Parece que te has perdido entre los chats. La página que buscas no existe o ha sido movida."}),s.jsxs(St,{to:"/",className:`
             inline-flex items-center px-6 py-3
             bg-purple-600 text-white font-semibold
             rounded-lg shadow-md
