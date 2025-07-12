@@ -26,7 +26,7 @@ export default function ChatOmni() {
       
 
       {/* --- ÁREA DE MENSAJES --- */}
-      <main className="flex-1 w-full overflow-auto h-full p-4 md:p-6 space-y-8">
+      <main className="flex-1 w-full overflow-auto h-full p-4 md:p-6 pb-0 md:pb-0 space-y-8">
         
         {/* Mensaje de bienvenida de la IA */}
         <AiMessage>{botConfig.welcomeMessage}</AiMessage>
@@ -47,24 +47,24 @@ export default function ChatOmni() {
             <p>Perfecto, ¡gracias!</p>
         </UserMessage>
 
-      </main>
 
       {/* --- ÁREA DE ENTRADA DE TEXTO --- */}
-      <footer className="flex-shrink-0 p-4 absolute bottom-0 left-0 w-full bg-slate-100 border-t border-slate-700">
-        <div className="relative">
+      <footer className="flex-shrink-0 p-2 sticky bottom-0 left-0 w-full bg-slate-100 ">
+        <div className="relative max-w-[600px] mx-auto">
           <textarea
             placeholder={`Escribe un mensaje a ${botConfig.name}...`}
-            className="w-full h-14 pr-20 p-4 bg-slate-50 text-slate-800 border border-slate-600 rounded-xl resize-none outline-none transition placeholder:text-slate-400"
-            rows={1}
+            className="w-full h-full shadow pr-20 p-4 bg-slate-50 text-slate-800  border-slate-600 rounded-2xl resize-none outline-none transition placeholder:text-slate-400"
+            rows={2}
           />
-          <button className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors disabled:bg-slate-500">
+          <button className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center h-10 min-w-10 px-1 cursor-pointer active:scale-90 transition bg-transparent active:text-secondary-500 text-primary-500 shadow-md border-x-2 rounded-xl disabled:bg-slate-500">
             <i className="ri-send-plane-fill"></i>
           </button>
         </div>
         <p className="text-xs text-slate-500 text-center mt-2">
-          ChatVerse puede cometer errores. Considera verificar la información importante.
+          Verifica la información importante.
         </p>
       </footer>
+      </main>
     </div>
   );
 }

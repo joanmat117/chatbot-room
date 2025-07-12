@@ -87,11 +87,11 @@ export function Header() {
                 
                 <div className={`grid transition-all duration-300 ease-in-out ${isChatbotsMenuOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                   <div className="overflow-hidden p-1">
-                    <div className="flex flex-col gap-1 text-3xl pt-2 pl-3">
-                      <NavItem icon='compass-3-line' to="/chat/omni" className="text-base">Omni Assistant</NavItem>
-                      <NavItem icon='translate-2' to="/chat/language" className="text-base">Language Coach</NavItem>
-                      <NavItem icon='magic-line' to="/chat/creative" className="text-base">Creative Studio</NavItem>
-                      <NavItem icon='book-2-line' to="/chat/academic" className="text-base">Academic Pro</NavItem>
+                    <div className="flex flex-col gap-1 text-3xl pt-2 pr-3">
+                      <NavItem icon='compass-3-line' to="/chat/omni" className="text-sm">Omni Assistant</NavItem>
+                      <NavItem icon='translate-2' to="/chat/language" className="text-sm">Language Coach</NavItem>
+                      <NavItem icon='magic-line' to="/chat/creative" className="text-sm">Creative Studio</NavItem>
+                      <NavItem icon='book-2-line' to="/chat/academic" className="text-sm">Academic Pro</NavItem>
                     </div>
                   </div>
                 </div>

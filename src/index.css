@@ -28,6 +28,8 @@
     --font-ubuntu: "Ubuntu", sans-serif;
     --font-orbitron: "Orbitron", sans-serif;
     --font-jura: "Jura";
+
+    --animate-show: show-scale 0.5s both ease;
 }
 
 @layer utilities {
@@ -38,4 +40,15 @@
 
 html {
     @apply bg-slate-100 font-ubuntu;
+}
+
+@keyframes show-scale {
+    0% {
+        transform: scale(0.5);
+        opacity:0.4;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
 }
