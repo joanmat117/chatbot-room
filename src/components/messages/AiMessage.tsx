@@ -32,7 +32,7 @@ export function AiMessage({ children }: { children: ReactNode }) {
 
           <button 
           onClick={handleCopy}
-          className="absolute bottom-0 left-0 text-slate-400 transition-all "
+          className="absolute bottom-0 translate-x left-0 text-slate-400 transition-all "
           aria-label="Copiar mensaje"
         >
           {isCopied ? <i className="ri-check-line"></i> : <i className="ri-clipboard-line"></i>}

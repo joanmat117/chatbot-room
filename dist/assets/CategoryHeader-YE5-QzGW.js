@@ -1,1 +1,0 @@
-import{j as t}from"./index-DIZm8O8b.js";const a=({title:e,description:s})=>t.jsxs("div",{className:"mb-8 md:mb-10",children:[t.jsx("h2",{className:"text-2xl font-orbitron md:text-3xl font-bold text-slate-600 pl-4",children:e}),t.jsx("p",{className:"text-slate-600 mt-2 pl-5",children:s})]});export{a as C};
