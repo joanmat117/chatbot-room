@@ -6,7 +6,7 @@ import { Footer } from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
 // Componente de carga (puedes personalizarlo)
-const Loading = () => <div className="loading">Cargando...</div>;
+const Loading = () => <div className="w-screen h-screen"></div>;
 
 // Carga perezosa de las páginas
 const HomePage = lazy(() => import('./pages/HomePage'));
