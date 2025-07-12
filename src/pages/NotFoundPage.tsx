@@ -1,7 +1,7 @@
 // src/pages/NotFoundPage.tsx
 import { Link } from 'react-router-dom';
 
-export const NotFoundPage: React.FC = () => {
+export default function NotFoundPage() {
   return (
     // Contenedor principal que centra todo vertical y horizontalmente
     // y ocupa toda la altura de la pantalla.

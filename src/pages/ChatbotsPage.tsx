@@ -2,7 +2,7 @@
 import { CategoryHeader } from '../components/CategoryHeader';
 import { ChatbotCard } from '../components/ChatbotCard';
 
-export function ChatbotsPage() {
+export default function ChatbotsPage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <main className="space-y-12 md:space-y-16">

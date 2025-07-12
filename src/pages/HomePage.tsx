@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CategoryHeader } from '../components/CategoryHeader';
 import { ChatbotCard } from '../components/ChatbotCard';
 
-export function HomePage() {
+export default function HomePage() {
   return (
     <main>
       <div className="container mx-auto px-6 py-12 md:py-24">

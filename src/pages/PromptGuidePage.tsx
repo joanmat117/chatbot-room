@@ -4,7 +4,7 @@ import { PromptComparison } from '../components/PromptComparison';
 import { TableOfContents } from '../components/TableOfContents';
 import { CategoryHeader } from '../components/CategoryHeader'; 
 
-export function PromptGuidePage() {
+export default function PromptGuidePage() {
   return (
     <div className="bg-slate-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
