@@ -17,7 +17,7 @@ export function MinimalHeader() {
   return (
     <>
       {/* --- BARRA SUPERIOR (HEADER) --- */}
-      <header className='sticky top-0 transition z-30 bg-slate-100'>
+      <header className='transition z-30 bg-slate-100'>
         <div className="md:mx-14 mx-auto flex justify-between items-center p-2">
           <div className="flex items-center gap-4">
             {/* Botón para abrir la sidebar */}

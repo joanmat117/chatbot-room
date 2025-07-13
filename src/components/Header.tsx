@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NavItem } from './NavItem'; 
+import { Logo } from './icons/Logo';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,8 +34,8 @@ export function Header() {
             </button>
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="#f10000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M12 6V2H8m0 16l-4 4V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Zm-6-6h2m5-1v2m6-2v2m5-1h2"/></svg>
               <span className="text-2xl font-orbitron font-bold text-slate-800">Chatbot Room</span>
+              <Logo className='size-8 text-primary-500'/>
             </Link>
           </div>
           <Link 

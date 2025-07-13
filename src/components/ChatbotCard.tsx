@@ -1,6 +1,6 @@
 // src/components/ChatbotCard.tsx
 import { Link } from 'react-router-dom';
-import type { ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ReactHTMLElement, ReactNode } from 'react';
 
 // --- Sub-componentes para Composición ---
 
@@ -18,16 +18,16 @@ const Description = ({ children }: { children: ReactNode }) => (
 );
 
 const Action = ({ children }: { children: ReactNode }) => (
-  <div className=" border-t py-1 px-2 rounded-full text-sm font-semibold text-slate-100 flex items-center transition-all shadow duration-300 ml-auto gap-x-2">
+  <div className=" border-t py-1 px-2 rounded-full text-sm font-medium text-slate-100 flex items-center transition-all shadow duration-300 ml-auto gap-x-2">
     {children} <i className="ri-arrow-right-line transition-opacity duration-300"></i>
   </div>
 );
 
 // --- Componente Principal ---
 
-type ChatbotCardProps = {
+interface ChatbotCardProps extends ComponentPropsWithoutRef<'article'> {
   linkTo: string;
-  gradientColor: string;
+  gradientColor: [string,string];
   children: ReactNode;
 };
 
@@ -35,9 +35,13 @@ type ChatbotCardProps = {
  * Tarjeta de presentación para un chatbot, construida con el patrón de composición.
  * El estilo principal "outlined" se logra con un borde de gradiente.
  */
-export function ChatbotCard({ linkTo, gradientColor, children }: ChatbotCardProps) {
+export function ChatbotCard({ linkTo, gradientColor, children ,...rest}: ChatbotCardProps) {
   return (
-    <article className={`rounded-xl bg-gradient-to-br ${gradientColor} shadow-md hover:shadow-xl hover:scale-95 transition`}>
+    <article {...rest}  
+    style={{
+    background: `linear-gradient(to right, ${gradientColor[0]}, ${gradientColor[1]})`
+  }}
+    className={`rounded-xl shadow-md hover:shadow-xl hover:scale-95 transition`}>
       <Link to={linkTo} className="group block h-full py-4 px-5 rounded-[15px]">
         <div className="flex flex-col h-full gap-3">
           {children}

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CategoryHeader } from '../components/CategoryHeader';
 import { ChatbotCard } from '../components/ChatbotCard';
+import { chatbotsData } from '../data/chatbots';
 
 export default function HomePage() {
   return (
@@ -18,45 +19,31 @@ export default function HomePage() {
 
         <section className="mb-20 md:mb-28">
           <CategoryHeader
-          title='Chatbots disponibles'
+          title={
+            
+            <Link to='/chatbots'>
+              <span className='underline '>Chatbots disponibles</span>
+              <i className="ri-arrow-right-double-line"></i></Link>
+          }
           description='Descubre el chatbot que necesitas'
           />
           <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-8">
             
-            <ChatbotCard linkTo="/chat/omni" gradientColor="from-indigo-500 to-purple-600">
-              <ChatbotCard.Head icon='compass-3-line'>Omni Assistant</ChatbotCard.Head>
-              <ChatbotCard.Description>Resuelve cualquier tema, desde ciencia hasta arte, con conocimiento integral.</ChatbotCard.Description>
-              <ChatbotCard.Action>Abrir Asistente</ChatbotCard.Action>
-            </ChatbotCard>
-
-            <ChatbotCard linkTo="/chat/developer" gradientColor="from-sky-400 to-blue-500">
-              <ChatbotCard.Head icon='code-box-line'>Code Expert</ChatbotCard.Head>
-              <ChatbotCard.Description>Depura código, explica algoritmos y enseña lenguajes de programación.</ChatbotCard.Description>
-              <ChatbotCard.Action>Abrir Asistente</ChatbotCard.Action>
-            </ChatbotCard>
-
-            <ChatbotCard linkTo="/chat/legal" gradientColor="from-purple-500 to-indigo-600">
-              <ChatbotCard.Head icon='scales-line'>Legal Pro</ChatbotCard.Head>
-              <ChatbotCard.Description>Analiza contratos, explica leyes y ayuda con documentos jurídicos.</ChatbotCard.Description>
-              <ChatbotCard.Action>Abrir Asistente</ChatbotCard.Action>
-            </ChatbotCard>
-
-            <ChatbotCard linkTo="/chat/health" gradientColor="from-emerald-400 to-teal-600">
-              <ChatbotCard.Head icon='heart-pulse-line'>Health Companion</ChatbotCard.Head>
-              <ChatbotCard.Description>Explica condiciones médicas, sugiere hábitos saludables y analiza síntomas.</ChatbotCard.Description>
-              <ChatbotCard.Action>Abrir Asistente</ChatbotCard.Action>
-            </ChatbotCard>
-
-            <ChatbotCard linkTo="/chat/analytics" gradientColor="from-rose-400 to-red-500">
-              <ChatbotCard.Head icon='bar-chart-box-line'>Data Analyst</ChatbotCard.Head>
-              <ChatbotCard.Description>Interpreta datasets, genera visualizaciones y encuentra patrones ocultos.</ChatbotCard.Description>
-              <ChatbotCard.Action>Abrir Asistente</ChatbotCard.Action>
-            </ChatbotCard>
+            {Object.entries(chatbotsData).slice(0,6).map(([chatbotId,chatbot]) => {
+                            if (!chatbot) return null;
+                            return (
+                              <ChatbotCard
+                                key={chatbotId}
+                                linkTo={`/chat/${chatbotId}`}
+                                gradientColor={[chatbot.primaryColor,chatbot.secondaryColor]}
+                              >
+                                <ChatbotCard.Head icon={chatbot.icon}>{chatbot.name}</ChatbotCard.Head>
+                                <ChatbotCard.Description>{chatbot.description}</ChatbotCard.Description>
+                                <ChatbotCard.Action>Iniciar Chat</ChatbotCard.Action>
+                              </ChatbotCard>
+                            );
+                          })}
             
-            <Link className='h-full border-2 border-dashed rounded-xl py-7 hover:scale-95 bg-transparent text-gray-900 font-orbitron  transition flex items-center justify-center font-medium text-2xl gap-4' to={'/chatbots'}>
-            Ver Todos
-            <i className='ri-arrow-right-double-fill'></i>
-            </Link>
           
           </div>
         </section>
