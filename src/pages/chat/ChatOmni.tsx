@@ -1,16 +1,17 @@
 
 import { UserMessage } from '../../components/messages/UserMessage';
 import { AiMessage } from '../../components/messages/AiMessage';
-import { chatbotsData } from '../../data/chatbots';
-import { useState, type FormEvent } from 'react';
+import { chatbotsData, type Chatbot} from '../../data/chatbots';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useAI } from '../../hooks/useAI';
 
-const chatbotPlaceholder = {
+const chatbotPlaceholder:Chatbot = {
     name: "AI Assistant",
     description: "Resuelve cualquier tema, solo pregunta y obten la respuesta al instante",
     icon: "emotion-happy-line",
     primaryColor: "#6366f1",
     secondaryColor: "#9333ea", 
+    contextMessage:"Eres un asistente de IA perteneciente a una web llamada Chatbot Room"
   } 
 export const chatbot = chatbotsData.omni || chatbotPlaceholder
 
@@ -18,42 +19,38 @@ export const chatbot = chatbotsData.omni || chatbotPlaceholder
 export default function ChatOmni() {
 
   const [prompt,setPrompt]=useState('')
+  const [messages,setMessages]=useState<Array<{role: 'user' | 'assistant', content: string}>>([])
 
-  const handleSubmit=(e: FormEvent<HTMLFormElement>)=>{
+  const {response,isLoading,error,generateResponse} = useAI()
+
+  const handleSubmit=async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     if(!prompt) return
 
-    useAI({prompt: prompt,system:"hola"})
+    setMessages(prev=>[...prev,{role:'user',content:prompt}])
+    
+    generateResponse({prompt,system:chatbot.contextMessage})
+    
+    console.log(response)
+    setMessages(prev=>[...prev,{role:'assistant',content:response}])
 
+    setPrompt('')
   }
+
+  console.log(isLoading)
 
   return (
     // Contenedor principal de la interfaz
     <>
       <main className="flex flex-col h-full w-full overflow-auto  p-4 md:p-6 mb-32 space-y-8">
         
-        <AiMessage>
-          <p>¡Claro que sí! Aquí tienes una función optimizada en JavaScript para comprobar si un número es primo:</p>
-          
-          <p className="mt-2">Esta función es eficiente porque evita iterar sobre todos los números. ¿Necesitas que te la explique o la adapte?</p>
-        </AiMessage>
-        <AiMessage>
-          <p>¡Claro que sí! Aquí tienes una función optimizada en JavaScript para comprobar si un número es primo:</p>
-          
-          <p className="mt-2">Esta función es eficiente porque evita iterar sobre todos los números. ¿Necesitas que te la explique o la adapte?</p>
-        </AiMessage><AiMessage>
-          <p>¡Claro que sí! Aquí tienes una función optimizada en JavaScript para comprobar si un número es primo:</p>
-          
-          <p className="mt-2">Esta función es eficiente porque evita iterar sobre todos los números. ¿Necesitas que te la explique o la adapte?</p>
-        </AiMessage><AiMessage>
-          <p>¡Claro que sí! Aquí tienes una función optimizada en JavaScript para comprobar si un número es primo:</p>
-          
-          <p className="mt-2">Esta función es eficiente porque evita iterar sobre todos los números. ¿Necesitas que te la explique o la adapte?</p>
-        </AiMessage><AiMessage>
-          <p>¡Claro que sí! Aquí tienes una función optimizada en JavaScript para comprobar si un número es primo:</p>
-          
-          <p className="mt-2">Esta función es eficiente porque evita iterar sobre todos los números. ¿Necesitas que te la explique o la adapte?</p>
-        </AiMessage>
+        {
+          messages?.map(message=>{
+            if(message.role == 'user') return <UserMessage>{message.content}</UserMessage>
+            else return <AiMessage>{message.content}</AiMessage>
+              
+          })
+        }
       </main>
       <footer className="fixed bottom-0 left-0 p-2 w-full bg-slate-100 z-10">
         <form 

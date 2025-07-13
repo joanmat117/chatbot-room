@@ -1,4 +1,4 @@
-interface Chatbot {
+export interface Chatbot {
   name: string;
   description: string;
   icon: string;
