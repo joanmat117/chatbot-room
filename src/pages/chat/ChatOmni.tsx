@@ -25,19 +25,30 @@ export default function ChatOmni() {
 
   const handleSubmit=async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
-    if(!prompt) return
+    if(!prompt || isLoading) return
 
     setMessages(prev=>[...prev,{role:'user',content:prompt}])
     
     generateResponse({prompt,system:chatbot.contextMessage})
-    
-    console.log(response)
-    setMessages(prev=>[...prev,{role:'assistant',content:response}])
 
     setPrompt('')
   }
 
-  console.log(isLoading)
+  useEffect(()=>{
+    if(response){
+      const lastmessage = messages[messages.length - 1]
+
+      if(lastmessage && lastmessage.role == 'user'){
+        setMessages(prev=>[...prev,{role:'assistant',content:response}])
+      } 
+      else {
+        setMessages(prev=>[
+          ...prev.slice(0,-1),
+          {role:'assistant',content:response}
+        ])
+      }
+    }
+  },[response])
 
   return (
     // Contenedor principal de la interfaz
@@ -45,12 +56,17 @@ export default function ChatOmni() {
       <main className="flex flex-col h-full w-full overflow-auto  p-4 md:p-6 mb-32 space-y-8">
         
         {
-          messages?.map(message=>{
-            if(message.role == 'user') return <UserMessage>{message.content}</UserMessage>
-            else return <AiMessage>{message.content}</AiMessage>
+          messages?.map((message,index)=>{
+            return message.role == 'user' ?
+            <UserMessage key={index}>{message.content}</UserMessage> : 
+            <AiMessage key={index}>{message.content}</AiMessage>
               
           })
         }
+        {isLoading && messages[messages.length - 1].role == 'user' &&
+          (<AiMessage>Escribiendo...</AiMessage>)
+        }
+
       </main>
       <footer className="fixed bottom-0 left-0 p-2 w-full bg-slate-100 z-10">
         <form 

@@ -1,6 +1,8 @@
 import Together from "together-ai";
 
-const together = new Together({apiKey:"9b3e196451cf663ffb4f8e5294c4cfa1257bdb9c6c5eff94b47887af64a4a2e4"});
+// API 2 : ed5a32a109fb206719fb2d8fa5c38998d6569547a365f3cb0d55ad332b3dc7c9
+
+const together = new Together({apiKey:"ed5a32a109fb206719fb2d8fa5c38998d6569547a365f3cb0d55ad332b3dc7c9"});
 
 interface Params {
   prompt: string,
