@@ -20,7 +20,7 @@ export function AiMessage({ children}: Props) {
   };
 
   return (
-    <div className="flex w-full animate-slide-in-blurred-left">
+    <div className="flex w-full ">
       <div className="max-w-xl md:max-w-3xl w-full flex gap-2 relative group">
         <div 
         style={{background: chatbot.secondaryColor}}

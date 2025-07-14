@@ -16,7 +16,7 @@ type MessagesType = Array<
   >
 
 export async function* fetchAiApi({prompt,system}:Params){
-
+try{
   
   const messages: MessagesType = [
     {
@@ -36,14 +36,27 @@ export async function* fetchAiApi({prompt,system}:Params){
 
 });
 
-try{
+  if (!response) {
+      throw new Error("No se recibió respuesta de la API");
+    }
+
     for await (const token of response) {
       const content = token.choices[0]?.delta?.content ?? ''
       yield content
   }
 } catch (e){
-  throw e
+  if (e instanceof Error) {
+      // Si es un error de conexión (como "NetworkError")
+      if (e.message.includes("Network")) {
+        throw new Error("Error de conexión. Verifica tu internet.");
+      }
+      // Si es un error de la API (ej: 401, 500)
+      throw new Error(`Error en la API: ${e.message}`);
+    } else {
+      // Para otros tipos de errores no esperados
+      throw new Error("Ocurrió un error desconocido");
+    }
+  }
 }
 
-}
 

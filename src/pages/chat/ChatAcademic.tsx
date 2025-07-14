@@ -15,7 +15,7 @@ const chatbotPlaceholder:Chatbot = {
     secondaryColor: "#9333ea", 
     contextMessage:"Eres un asistente de IA perteneciente a una web llamada Chatbot Room"
   } 
-export const chatbot = chatbotsData.omni || chatbotPlaceholder
+export const chatbot = chatbotsData.academic || chatbotPlaceholder
 
 
 export default function ChatOmni() {

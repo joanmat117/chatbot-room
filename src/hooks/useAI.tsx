@@ -2,36 +2,31 @@ import { useCallback, useEffect, useState } from "react";
 import { fetchAiApi } from "../services/fetchAiApi";
 
 interface Params {
-    prompt:string,
-    system:string
+    prompt: string,
+    system: string
 }
 
-export const useAI = ()=>{
-    const [response, setResponse]=useState('')
-    const [isLoading,setIsLoading]=useState(false)
-    const [error,setError]=useState<Error|null>(null)
+export const useAI = () => {
+    const [response, setResponse] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<null | string>(null);
 
-    const generateResponse = useCallback(async({prompt,system}:Params)=>{
+    const generateResponse = useCallback(async ({ prompt, system }: Params) => {
+        setIsLoading(true);
+        setError(null);
+        setResponse("");
 
-        setIsLoading(true)
-        setError(null)
-        setResponse("")
-
-        const processStream=async()=>{
-            try {
-            for await (const token of fetchAiApi({prompt,system})) {
-                    setResponse(prev=>prev+=token)
+        try {
+            for await (const token of fetchAiApi({ prompt, system })) {
+                setResponse(prev => prev + token);
             }
-            } catch(e){
-                setError(e as Error)
-            } finally {
-                setIsLoading(false)
+        } catch (e) {
+            console.log("Error al recibir la respuesta:", e);
+            setError("Error al recibir la respuesta");
+        } finally {
+            setIsLoading(false);
         }
-        }
+    }, []);
 
-        processStream()
-        
-    },[])
-
-    return {response,isLoading,error,generateResponse}
-}
+    return { response, isLoading, error, generateResponse };
+};
