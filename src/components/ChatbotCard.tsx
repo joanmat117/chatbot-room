@@ -1,6 +1,6 @@
 // src/components/ChatbotCard.tsx
 import { Link } from 'react-router-dom';
-import type { ComponentPropsWithoutRef, ReactHTMLElement, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 // --- Sub-componentes para Composición ---
 
