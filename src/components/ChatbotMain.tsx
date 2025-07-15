@@ -1,25 +1,14 @@
-
-import { UserMessage } from '../../components/chat/UserMessage';
-import { AiMessage } from '../../components/chat/AiMessage';
-import { chatbotsData, type Chatbot} from '../../data/chatbots';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { useAI } from '../../hooks/useAI';
-import { IconLoading } from '../../components/icons/IconLoading';
-import { ChatPlaceholder } from '../../components/chat/ChatPlaceholder';
-
-const chatbotPlaceholder:Chatbot = {
-    name: "AI Assistant",
-    description: "Resuelve cualquier tema, solo pregunta y obten la respuesta al instante",
-    icon: "emotion-happy-line",
-    primaryColor: "#6366f1",
-    secondaryColor: "#9333ea", 
-    contextMessage:"Eres un asistente de IA perteneciente a una web llamada Chatbot Room"
-  } 
-export const chatbot = chatbotsData.finance || chatbotPlaceholder
-
-
-export default function ChatOmni() {
-
+import { UserMessage } from './chat/UserMessage';
+import { AiMessage } from './chat/AiMessage';
+import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
+import { useAI } from '../hooks/useAI';
+import { ChatPlaceholder } from './chat/ChatPlaceholder';
+import { SkeletonChatAi } from './skeletons/SkeletonChatAi';
+import { ChatbotContext } from '../contexts/ChatbotContext';
+import { useUpdateEffect } from '../hooks/useUpdateEffect';
+  
+  export default function ChatbotMain() {
+  const chatbot = useContext(ChatbotContext)
   const [prompt,setPrompt]=useState('')
   const [messages,setMessages]=useState<Array<{role: 'user' | 'assistant', content: string}>>([])
 
@@ -42,25 +31,39 @@ export default function ChatOmni() {
 
   useEffect(()=>{
     if(error){
-      alert(error)
+      console.log(error)
       return
     }
     if(response){
-      const lastmessage = messages[messages.length - 1]
+    const lastmessage = messages[messages.length - 1]
 
-      if(lastmessage && lastmessage.role == 'user'){
-        setMessages(prev=>[...prev,{role:'assistant',content:response}])
-      } 
-      else {
-        setMessages(prev=>[
-          ...prev.slice(0,-1),
-          {role:'assistant',content:response}
-        ])
-      }
+    if(lastmessage && lastmessage.role == 'user'){
+      setMessages(prev=>[...prev,{role:'assistant',content:response}])
+    } 
+    else {
+      setMessages(prev=>[
+        ...prev.slice(0,-1),
+        {role:'assistant',content:response}
+      ])
+      
     }
+  }
   },[response,error])
 
-  useEffect(scrollChatToBottom,[messages])
+  useEffect(()=>{
+    scrollChatToBottom()
+    sessionStorage.setItem('messages',JSON.stringify(messages))
+  },[messages])
+
+  useUpdateEffect(()=>{
+    setMessages([])
+  },[chatbot])
+
+  useEffect(()=>{
+    const sessionMessages = sessionStorage.getItem('messages')
+    if(sessionMessages !== null) 
+    setMessages(JSON.parse(sessionMessages as string)) 
+  },[])
 
   return (
     <>
@@ -76,8 +79,10 @@ export default function ChatOmni() {
           <ChatPlaceholder icon={chatbot.icon} name={chatbot.name}/>
         }
 
-        {isLoading && messages[messages.length - 1].role == 'user' && 
-         (<AiMessage><IconLoading className='w-8 h-fit'/></AiMessage>)
+        {isLoading && messages.length > 0 && messages[messages.length - 1].role == 'user' && 
+         (<AiMessage className="animate-slide-in-blurred-left">
+          <SkeletonChatAi/>
+         </AiMessage>)
         }
 
       </main>
@@ -91,14 +96,14 @@ export default function ChatOmni() {
             onChange={(e)=>setPrompt(e.target.value)}
             value={prompt}
             placeholder={`Escribe un mensaje a ${chatbot.name}...`}
-            className="w-full h-full shadow pr-20 p-4 bg-slate-50 text-slate-800  border-slate-600 rounded-2xl [scrollbar-width:none] [-webkit-scrollbar]:hidden] resize-none outline-none transition placeholder:text-slate-400"
+            className="w-full h-full shadow pr-20 p-4  bg-slate-50 text-slate-800  border-slate-600 rounded-2xl [scrollbar-width:none] [-webkit-scrollbar]:hidden] resize-none outline-none transition placeholder:text-slate-400"
             rows={2}
           />
           <button 
           style={{backgroundColor:chatbot.secondaryColor}}
           disabled={!prompt&& true}
-          className={`absolute right-4 text-white top-1/2 -translate-y-1/2 flex items-center justify-center h-10 min-w-10 px-1  transition bg-transparent shadow-md rounded-full ${!prompt ? 'opacity-30 cursor-not-allowed': 'active:scale-90 cursor-pointer'} `}>
-            <i className="ri-send-plane-2-fill"></i>
+          className={`absolute right-4 text-white top-1/2 -translate-y-1/2 flex items-center justify-center text-2xl h-10 min-w-10 px-1  transition bg-transparent shadow-md rounded-full ${!prompt ? 'opacity-30 cursor-not-allowed': 'active:scale-90 cursor-pointer'} `}>
+            <i className="ri-arrow-up-double-line"></i>
           </button>
         </form>
         <p className="text-xs text-slate-500 text-center mt-2">

@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import ScrollToTop from './components/ScrollToTop';
 import DefaultLayout from './layouts/DefaultLayout';
-import MinimalLayout from './layouts/MinimalLayout';
+import ChatPage from './pages/chat/ChatPage';
+import { chatbotsData } from './data/chatbots';
 
 // Componente de carga (puedes personalizarlo)
 const Loading = () => <div className="w-screen h-screen"></div>;
@@ -13,7 +14,6 @@ const HomePage = lazy(() => import('./pages/HomePage'));
 const ChatbotsPage = lazy(() => import('./pages/ChatbotsPage'));
 const PromptGuidePage = lazy(() => import('./pages/PromptGuidePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-const ChatOmniPage = lazy(() => import('./pages/chat/ChatOmni'));
 
 function App() {
   return (
@@ -30,9 +30,13 @@ function App() {
             <Route path='*' element={<NotFoundPage/>}/>
           </Route>
 
-          <Route element={<MinimalLayout/>}>
-            <Route path='/chat/omni' element={<ChatOmniPage/>}/>
-          </Route>
+          {
+            Object.entries(chatbotsData).map(([chatbotId,chatbot])=>{
+              return <Route path={`/chat/${chatbotId}`} element={<ChatPage chatbot={chatbot}/>}/>
+            })
+          }
+
+          
 
 
         </Routes>

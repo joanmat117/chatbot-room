@@ -1,12 +1,15 @@
 // src/components/messages/AiMessage.tsx
-import { useState, useRef, type ReactNode } from 'react';
-import { chatbot } from '../../pages/chat/ChatOmni';
+import { useState, useRef, type ReactNode, useContext } from 'react';
+import { ChatbotContext } from '../../contexts/ChatbotContext';
 
 interface Props { 
-  children: ReactNode
+  children: ReactNode,
+  className?:string
 }
 
-export function AiMessage({ children}: Props) {
+export function AiMessage({ children,className}: Props) {
+  const chatbot = useContext(ChatbotContext)
+
   const [isCopied, setIsCopied] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +23,7 @@ export function AiMessage({ children}: Props) {
   };
 
   return (
-    <div className="flex w-full ">
+    <div className={`flex w-full ${className}`}>
       <div className="max-w-xl md:max-w-3xl w-full flex gap-2 relative group">
         <div 
         style={{background: chatbot.secondaryColor}}

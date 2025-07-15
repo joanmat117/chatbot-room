@@ -1,12 +1,15 @@
 // src/components/messages/UserMessage.tsx
-import type { ReactNode } from 'react';
-import { chatbot } from '../../pages/chat/ChatOmni';
+import { useContext, type ReactNode } from 'react';
+import { ChatbotContext } from '../../contexts/ChatbotContext';
 
 interface Props {
   children:ReactNode
 }
 
 export function UserMessage({ children}:Props){
+  const chatbot = useContext(ChatbotContext)
+  
+
   return (
     <div className="flex justify-end w-full animate-slide-in-blurred-right">
       <div 

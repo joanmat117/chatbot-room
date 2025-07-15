@@ -31,9 +31,9 @@
 
 
 
-    --animate-slide-in-blurred-right: slide-in-blurred-right .6s cubic-bezier(.23,1.000,.32,1.000) both;
-
-    --animate-slide-in-blurred-left:slide-in-blurred-left 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+    --animate-slide-in-blurred-right: slide-in-blurred-right 0.6s cubic-bezier(.23,1.000,.32,1.000) both;
+    --animate-slide-in-blurred-left:slide-in-blurred-left 0.6s 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+    --animate-show-with-opacity: show-with-opacity 0.4s ease
 }
 
 
@@ -105,4 +105,22 @@ html {
             filter: blur(0);
     opacity: 1;
   }
+}
+
+@keyframes show-with-opacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes show-with-scale {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
