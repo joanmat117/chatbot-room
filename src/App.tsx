@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import ScrollToTop from './components/ScrollToTop';
+import { ScrollToTop } from './utils/ScrollToTop';
 import DefaultLayout from './layouts/DefaultLayout';
 import ChatPage from './pages/chat/ChatPage';
 import { chatbotsData } from './data/chatbots';
@@ -18,6 +18,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 function App() {
   return (
     <BrowserRouter basename='/'>
+
       <ScrollToTop/>
       
       <Suspense fallback={<Loading />}>

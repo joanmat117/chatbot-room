@@ -8,9 +8,10 @@ export function TokenLoading({children}:{children:string}){
     
     return (
         <>
+        
             {characters.map((word,index)=>{
                 return (
-                    <span key={index} style={{animation:"show-with-scale 2s both",animationDelay: `${index*0.1 - index*0.06}s`}}>
+                    <span key={index} style={{animation:"show-with-scale 2s both"}}>
                         {word + " "}
                     </span>
                 )

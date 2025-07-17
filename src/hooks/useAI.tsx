@@ -11,7 +11,7 @@ export const useAI = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<null | string>(null);
 
-    const generateResponse = useCallback(async ({ prompt, system }: Params) => {
+    const generateResponse = async ({ prompt, system }: Params) => {
         setIsLoading(true);
         setError(null);
         setResponse("");
@@ -21,12 +21,17 @@ export const useAI = () => {
                 setResponse(prev => prev + token);
             }
         } catch (e) {
-            console.log("Error al recibir la respuesta:", e);
-            setError("Error al recibir la respuesta");
+            console.log("Error en la API: ",e)
+            if(e instanceof Error){
+                setError("NetworkError")
+            } 
+            else {
+                setError("UnknownError")
+            }
         } finally {
             setIsLoading(false);
         }
-    }, []);
+    }
 
     return { response, isLoading, error, generateResponse };
 };

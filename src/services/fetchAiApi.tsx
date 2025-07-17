@@ -45,18 +45,7 @@ try{
       yield content
   }
 } catch (e){
-  if (e instanceof Error) {
-      // Si es un error de conexión (como "NetworkError")
-      if (e.message.includes("Network")) {
-        throw new Error("Error de conexión. Verifica tu internet.");
-      }
-      // Si es un error de la API (ej: 401, 500)
-      throw new Error(`Error en la API: ${e.message}`);
-    } else {
-      // Para otros tipos de errores no esperados
-      throw new Error("Ocurrió un error desconocido");
-    }
-  }
+  throw e
 }
-
+}
 

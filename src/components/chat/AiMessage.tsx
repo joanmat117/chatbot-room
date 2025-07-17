@@ -32,7 +32,7 @@ export function AiMessage({ children,className}: Props) {
         </div>
         <div className="bg-slate-100 md:pl-2 relative  rounded-2xl rounded-bl-lg ">
           
-          <div ref={textRef} className="prose prose-sm prose-invert max-w-none">
+          <div ref={textRef} className="markdown-text  prose prose-sm prose-invert ">
             {children}
           </div>
 

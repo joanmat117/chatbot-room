@@ -5,23 +5,41 @@ import { useAI } from '../hooks/useAI';
 import { ChatPlaceholder } from './chat/ChatPlaceholder';
 import { SkeletonChatAi } from './skeletons/SkeletonChatAi';
 import { ChatbotContext } from '../contexts/ChatbotContext';
-import { useUpdateEffect } from '../hooks/useUpdateEffect';
+import { scrollToBottom } from '../utils/scrollToBottom';
+import { useRefChange } from '../hooks/useRefChange';
+import { TokenLoading } from './TokenLoading';
+import { MDToHTML } from './MDToHTML';
+
+type Message = {role: 'user' | 'assistant', content: string}
+type Messages = Message[]
   
   export default function ChatbotMain() {
+
+  //   States & Refs & Contexts
   const chatbot = useContext(ChatbotContext)
-  const [prompt,setPrompt]=useState('')
-  const [messages,setMessages]=useState<Array<{role: 'user' | 'assistant', content: string}>>([])
-
   const chatContainerRef = useRef<HTMLElement>(null)
-  const scrollChatToBottom=()=>{
-    if(chatContainerRef.current){
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
-  }}
-
+  const [prompt,setPrompt]=useState('')
+  const [messages,setMessages]=useState<Messages>([])
   const {response,isLoading,error,generateResponse} = useAI()
 
   
-  const handleSubmit=async(e: FormEvent<HTMLFormElement>)=>{
+  //Execute when the chatbot change
+  useRefChange(chatbot.name,()=>{
+    sessionStorage.removeItem('messages')
+    setMessages([])
+  })
+  
+  
+  //   Functions
+  const addMessagesToChat = (role:'user' | 'assistant',content:string)=>{
+      if(messages[messages.length - 1] && messages[messages.length - 1].role !== role) 
+      setMessages(prev=>[...prev,{role,content}]) 
+      else setMessages(prev=>[...prev.slice(0,-1),{role,content}])
+    sessionStorage.setItem("messages",JSON.stringify(messages))
+
+  }
+  
+  const handleSubmit = async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     if(!prompt || isLoading) return
     setMessages(prev=>[...prev,{role:'user',content:prompt}])
@@ -29,52 +47,39 @@ import { useUpdateEffect } from '../hooks/useUpdateEffect';
     setPrompt('')
   }
 
+  //   Effects
   useEffect(()=>{
     if(error){
-      console.log(error)
-      return
+      if(error == "UnknownError") addMessagesToChat('assistant',"Reintentalo mas tarde, hubo un error")
+      if(error == "NetworkError") addMessagesToChat('assistant',"Revisa tu conexion a internet")
     }
     if(response){
-    const lastmessage = messages[messages.length - 1]
-
-    if(lastmessage && lastmessage.role == 'user'){
-      setMessages(prev=>[...prev,{role:'assistant',content:response}])
-    } 
-    else {
-      setMessages(prev=>[
-        ...prev.slice(0,-1),
-        {role:'assistant',content:response}
-      ])
-      
+      addMessagesToChat('assistant',response)
     }
-  }
   },[response,error])
 
   useEffect(()=>{
-    scrollChatToBottom()
-    sessionStorage.setItem('messages',JSON.stringify(messages))
-  },[messages])
-
-  useUpdateEffect(()=>{
-    setMessages([])
-  },[chatbot])
+    if(sessionStorage.getItem('messages')) 
+      setMessages(JSON.parse(sessionStorage.getItem('messages') as string))
+  },[])
 
   useEffect(()=>{
-    const sessionMessages = sessionStorage.getItem('messages')
-    if(sessionMessages !== null) 
-    setMessages(JSON.parse(sessionMessages as string)) 
-  },[])
+  scrollToBottom(chatContainerRef)
+  },[messages])
+
 
   return (
     <>
-      <main ref={chatContainerRef} className="flex flex-col h-full w-full overflow-x-hidden overflow-y-auto p-4 md:p-6 mb-32 space-y-8">
+      <main ref={chatContainerRef} className="flex flex-col h-full w-full overflow-x-hidden scroll-smooth overflow-y-auto p-4 md:p-6 mb-32 space-y-8">
         
         {
           messages.length > 0?
           messages.map((message,index)=>{
             return message.role == 'user' ?
             <UserMessage key={index}>{message.content}</UserMessage> : 
-            <AiMessage key={index}>{message.content}</AiMessage>
+            <AiMessage key={index}>
+              <MDToHTML>{message.content}</MDToHTML>
+              </AiMessage>
           }) :
           <ChatPlaceholder icon={chatbot.icon} name={chatbot.name}/>
         }
