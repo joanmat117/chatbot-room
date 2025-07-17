@@ -84,11 +84,11 @@ html {
 
 /* Bloques de código (si usas react-syntax-highlighter) */
 .markdown-text pre {
-  @apply bg-gray-600 text-white rounded p-3 py-5 my-3 overflow-auto whitespace-pre-wrap rounded-2xl;
+  @apply text-white border my-3 p-0 overflow-auto whitespace-pre-wrap rounded-2xl;
 }
 
 .markdown-text pre code {
-    @apply bg-transparent overflow-auto
+    @apply bg-transparent overflow-auto text-sm
 }
 
 @keyframes show-scale {

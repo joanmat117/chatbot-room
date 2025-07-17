@@ -7,7 +7,6 @@ import { SkeletonChatAi } from './skeletons/SkeletonChatAi';
 import { ChatbotContext } from '../contexts/ChatbotContext';
 import { scrollToBottom } from '../utils/scrollToBottom';
 import { useRefChange } from '../hooks/useRefChange';
-import { TokenLoading } from './TokenLoading';
 import { MDToHTML } from './MDToHTML';
 
 type Message = {role: 'user' | 'assistant', content: string}
@@ -78,7 +77,9 @@ type Messages = Message[]
             return message.role == 'user' ?
             <UserMessage key={index}>{message.content}</UserMessage> : 
             <AiMessage key={index}>
-              <MDToHTML>{message.content}</MDToHTML>
+              <MDToHTML>
+                {message.content}
+                </MDToHTML>
               </AiMessage>
           }) :
           <ChatPlaceholder icon={chatbot.icon} name={chatbot.name}/>
