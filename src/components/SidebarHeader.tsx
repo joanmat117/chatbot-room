@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { NavItem } from "./NavItem";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect} from "react";
 import { chatbotsData } from "../data/chatbots";
 
 export function SidebarHeader(){
