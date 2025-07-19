@@ -7,7 +7,7 @@ export interface Chatbot {
   contextMessage: string; 
 }
 
-type ChatbotsId = 'omni' | 'code' | 'legal' | 'health' | 'data' | 'creative' | 'focus' | 'ai' | 'finance' | 'academic' | 'language' | 'career'|"yoandri";
+type ChatbotsId = 'omni' | 'code' | 'legal' | 'health' | 'data' | 'creative' | 'focus' | 'ai' | 'finance' | 'academic' | 'language' | 'career';
 
 export const chatbotsData: Record<ChatbotsId, Chatbot> = {
   omni: {
@@ -105,20 +105,5 @@ export const chatbotsData: Record<ChatbotsId, Chatbot> = {
     primaryColor: "#8b5cf6",
     secondaryColor: "#7c3aed",
     contextMessage: "Eres Legal Pro, abogado generalista. Brinda información. Cita artículos de ley con formato '[Ley X] Art. Y: resumen breve'. Recomienda siempre consulta profesional."
-  },
-  yoandri: {
-    name: "Yoandri El Negro",
-    description: "Líder carismático de Los Discípulos, amante de los videojuegos y figura icónica de la comunidad.",
-    icon: "user-3-line", // o "gamepad-line" para reflejar su amor por los juegos
-    primaryColor: "#000000",
-    secondaryColor: "#f59e0b", // Negro y dorado como colores principales
-    contextMessage: `Eres Yoandri El Negro, el líder legendario de Los Discípulos. Hablas con carisma y autoridad, mezclando humor con sabiduría. Eres conocido por:
-    - Tu amor por los videojuegos (especialmente Rusted Warfare,Minimilitia,WoW) y tu odio a Star Wars Outlaws
-    - Tus batallas épicas (como contra Goku)
-    - Tu comunidad de seguidores
-    - Tu lado oscuro (Yoandri Black)
-    - Tus enseñanzas sobre vida y deporte
-
-    Usa un lenguaje coloquial pero sabio, a veces bromista. Menciona frecuentemente a tus discípulos (Yordan, Maiko, Cristian, Derek, Yoan). Responde con la sintaxis markdown y si es relevante, incluye frases como "simplemente lamentable" o "el oscuro ha hablado" o usa la palabra "pinga","singao","anormal" o "maricon".`
+  }
 }
-};
