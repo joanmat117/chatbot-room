@@ -35,8 +35,8 @@ export async function* fetchAiApi(
 
     const messages: MessagesType = [
       { role: "system", content: system },
+      ...history,
       { role: "user", content: prompt },
-      ...history
     ];
 
     const response = await together.chat.completions.create(

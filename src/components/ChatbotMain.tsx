@@ -18,15 +18,16 @@ type Messages = Message[]
   const chatbot = useContext(ChatbotContext)
   const chatContainerRef = useRef<HTMLElement>(null)
   const [prompt,setPrompt]=useState('')
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const [messages,setMessages]=useState<Messages>([])
   const {response,isLoading,error,generateResponse,cancelGeneration} = useAI()
 
   
   //Execute when the chatbot change
   useRefChange(chatbot.name,()=>{
+    cancelGeneration()
     sessionStorage.removeItem('messages')
     setMessages([])
-    cancelGeneration()
   })
   
   
@@ -45,9 +46,9 @@ type Messages = Message[]
   const handleSubmit = async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     if(!prompt || isLoading) return
+    if(inputRef.current) inputRef.current.value = ""
     setMessages(prev=>[...prev,{role:'user',content:prompt}])
-    generateResponse({prompt,system:chatbot.contextMessage,messages})
-    setPrompt('')
+    generateResponse({prompt,system:chatbot.contextMessage,messages: messages})
   }
 
   //   Effects
@@ -101,6 +102,7 @@ type Messages = Message[]
         onSubmit={handleSubmit}
         className="relative max-w-[700px] mx-auto">
           <textarea
+            ref={inputRef}
             name="prompt"
             autoComplete='off'
             onChange={(e)=>setPrompt(e.target.value)}
