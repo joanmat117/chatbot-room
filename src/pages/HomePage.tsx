@@ -6,15 +6,21 @@ import { chatbotsData } from '../data/chatbots';
 export default function HomePage() {
   return (
     <main className='animate-entering'>
-      <div className="container mx-auto px-6 py-12 md:py-24">
+      <div className="container mx-auto px-6 py-8 md:py-24 ">
         
-        <section className="text-center mb-20 md:mb-28">
-          <h1 className="text-4xl font-orbitron sm:text-5xl md:text-6xl font-medium mb-4 bg-gradient-to-r from-primary-600 to-secondary-500 from-40% to-60% text-transparent bg-clip-text">
+        <section className="flex items-center justify-between gap-3.5 flex-col md:flex-row mb-20 md:mb-28">
+          <div className='my-10'>
+          <h1 className="text-4xl font-orbitron sm:text-5xl font-medium mb-4 bg-gradient-to-r from-primary-600 to-secondary-500 from-40% to-60% text-transparent bg-clip-text">
             Bienvenido a Chatbot Room
           </h1>
-          <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-slate-600 max-w-3xl">
             Explora un universo de conversaciones inteligentes. Elige tu asistente y comienza a crear, aprender y resolver problemas.
           </p>
+          </div>
+          <img className='
+          object-contain
+          w-full max-h-72
+          ' src='/undraw_ai-agent.svg'/>
         </section>
 
         <section className="mb-20 md:mb-28">

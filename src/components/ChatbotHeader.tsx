@@ -14,10 +14,10 @@ export function ChatbotHeader() {
             <SidebarHeader/>
             <section
             style={{borderColor: chatbot.secondaryColor}}
-            className='flex gap-3 items-center border-2 rounded-full overflow-hidden'>
+            className='flex gap-3 items-center border-l-2 shadow xl:border-2 rounded-full overflow-hidden'>
             <p className='ml-3 hidden xl:block'>{chatbot.description}</p>
-            <div style={{backgroundColor: chatbot.secondaryColor}} 
-            className='rounded-full text-white flex  font-medium p-2 gap-2'>
+            <div style={{color: chatbot.secondaryColor}} 
+            className='rounded-full text-white flex border-l-0 xl:border-l-2  font-medium p-2 gap-2'>
             <i className={`ri-${chatbot.icon}`}></i>
             <h2>{chatbot.name}</h2>
             </div>
