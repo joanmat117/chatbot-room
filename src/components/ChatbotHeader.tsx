@@ -1,6 +1,3 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { NavItem } from './NavItem'; 
 import { SidebarHeader } from './SidebarHeader';
 
 
