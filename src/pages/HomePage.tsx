@@ -5,7 +5,7 @@ import { chatbotsData } from '../data/chatbots';
 
 export default function HomePage() {
   return (
-    <main>
+    <main className='animate-entering'>
       <div className="container mx-auto px-6 py-12 md:py-24">
         
         <section className="text-center mb-20 md:mb-28">

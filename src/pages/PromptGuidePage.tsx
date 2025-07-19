@@ -8,9 +8,9 @@ export default function PromptGuidePage() {
   return (
     <div className="bg-slate-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <main className="space-y-12 md:space-y-16">
+        <main className="space-y-12 md:space-y-16 animate-entering">
 
-          <section className='h-screen max-h-[700px] overflow-hidden relative bg-gradient-to-r from-slate-950  via-slate-600 to-slate-600 py-52 md:to-slate-950 via-70% flex items-center justify-end rounded-4xl'>
+          <section className='h-screen max-h-[700px] overflow-hidden relative bg-gradient-to-r from-slate-950 via-slate-800 to-slate-800 py-52 md:to-slate-950 via-70% flex items-center justify-end rounded-4xl'>
             <div className="w-full h-full bg-pattern-stars  absolute top-0 left-0 flex justify-center flex-col p-4 md:p-12 lg:p-16  gap-5">
               <h1 className="text-4xl font-orbitron md:text-5xl font-medium text-slate-50 leading-tight">
                 Maestría en Prompts

@@ -16,7 +16,7 @@ export function NavItem({className,icon = "close", to, children }: NavItemProps)
       className={({ isActive }) =>`relative py-2 text-lg px-2 shadow active:scale-95 hover:scale-95 transition rounded-2xl ${className} ${
           isActive ? 'bg-secondary-500 text-white': 'bg-slate-50 text-gray-700 hover:text-secondary-700'}`}
     >
-        <i className={`ri-${icon} mr-1 `}></i>
+        <i className={`ri-${icon} mr-2.5 `}></i>
       <span className=''>{children}</span>
     </NavLink>
   );

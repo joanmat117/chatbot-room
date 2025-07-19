@@ -26,8 +26,8 @@ export function AiMessage({ children,className}: Props) {
     <div className={`flex w-full ${className}`}>
       <div className="max-w-xl md:max-w-3xl w-full flex gap-2 relative group">
         <div 
-        style={{background: chatbot.secondaryColor}}
-        className="flex-shrink-0 size-8 rounded-full shadow-md text-white flex items-center justify-center self-start">
+        style={{color: chatbot.secondaryColor}}
+        className="flex-shrink-0 size-8 rounded-full border-2 shadow-md text-white flex items-center justify-center self-start">
           <i className={`ri-${chatbot.icon} text-xl`}></i>
         </div>
         <div className="bg-slate-100 md:pl-2 relative  rounded-2xl rounded-bl-lg ">
