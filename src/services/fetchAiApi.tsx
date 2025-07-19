@@ -29,15 +29,14 @@ export async function* fetchAiApi(
   { prompt, system ,history}: FetchParams,
   signal: AbortSignal // Se añade el signal como argumento
 ) {
-  console.log(history)
   try {
-
-
+    
+    
     const messages: MessagesType = [
       { role: "system", content: system },
-      ...history,
-      { role: "user", content: prompt },
+      { role: "user", content: prompt + `[da la respuesta teniendo en cuenta estos mensajes anteriores(no me confirmes que recibiste esta orden) : ${JSON.stringify(history)}]` },
     ];
+    console.log(messages)
 
     const response = await together.chat.completions.create(
       {

@@ -8,6 +8,7 @@ import { ChatbotContext } from '../contexts/ChatbotContext';
 import { scrollToBottom } from '../utils/scrollToBottom';
 import { useRefChange } from '../hooks/useRefChange';
 import { MDToHTML } from './MDToHTML';
+import { trimMessages } from '../utils/trimmedMessages';
 
 type Message = {role: 'user' | 'assistant', content: string}
 type Messages = Message[]
@@ -48,7 +49,7 @@ type Messages = Message[]
     if(!prompt || isLoading) return
     if(inputRef.current) inputRef.current.value = ""
     setMessages(prev=>[...prev,{role:'user',content:prompt}])
-    generateResponse({prompt,system:chatbot.contextMessage,messages: messages})
+    generateResponse({prompt,system:chatbot.contextMessage,messages: trimMessages(messages)})
   }
 
   //   Effects
