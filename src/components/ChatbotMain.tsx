@@ -1,6 +1,6 @@
 import { UserMessage } from './chat/UserMessage';
 import { AiMessage } from './chat/AiMessage';
-import { useContext, useEffect, useRef, useState, type FormEvent } from 'react';
+import { useContext, useEffect, useRef, useState, type FormEvent} from 'react';
 import { useAI } from '../hooks/useAI';
 import { ChatPlaceholder } from './chat/ChatPlaceholder';
 import { SkeletonChatAi } from './skeletons/SkeletonChatAi';
@@ -8,7 +8,6 @@ import { ChatbotContext } from '../contexts/ChatbotContext';
 import { scrollToBottom } from '../utils/scrollToBottom';
 import { useRefChange } from '../hooks/useRefChange';
 import { MDToHTML } from './MDToHTML';
-import { TokenLoading } from './TokenLoading';
 
 type Message = {role: 'user' | 'assistant', content: string}
 type Messages = Message[]
@@ -18,7 +17,7 @@ type Messages = Message[]
   //   States & Refs & Contexts
   const chatbot = useContext(ChatbotContext)
   const chatContainerRef = useRef<HTMLElement>(null)
-  const prompt = useRef('')
+  const [prompt,setPrompt]=useState('')
   const [messages,setMessages]=useState<Messages>([])
   const {response,isLoading,error,generateResponse} = useAI()
 
@@ -42,8 +41,8 @@ type Messages = Message[]
   const handleSubmit = async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     if(!prompt || isLoading) return
-    setMessages(prev=>[...prev,{role:'user',content:prompt.current}])
-    generateResponse({prompt:prompt.current,system:chatbot.contextMessage})
+    setMessages(prev=>[...prev,{role:'user',content:prompt}])
+    generateResponse({prompt,system:chatbot.contextMessage})
   }
 
   //   Effects
@@ -77,11 +76,9 @@ type Messages = Message[]
             return message.role == 'user' ?
             <UserMessage key={index}>{message.content}</UserMessage> : 
             <AiMessage key={index}>
-              <TokenLoading>
               <MDToHTML>
                 {message.content}
                 </MDToHTML>
-                </TokenLoading>
               </AiMessage>
           }) :
           <ChatPlaceholder icon={chatbot.icon} name={chatbot.name}/>
@@ -101,8 +98,7 @@ type Messages = Message[]
           <textarea
             name="prompt"
             autoComplete='off'
-            onChange={(e)=>prompt.current = e.target.value}
-            
+            onChange={(e)=>setPrompt(e.target.value)}
             style={{borderColor: chatbot.secondaryColor}}
             placeholder={`Escribe un mensaje a ${chatbot.name}...`}
             className="w-full h-full border-r-3 border-l-3 shadow pr-20 p-4  bg-slate-50 text-slate-800  border-slate-600 rounded-2xl [scrollbar-width:none] [-webkit-scrollbar]:hidden] resize-none outline-none transition placeholder:text-slate-400"
@@ -111,7 +107,7 @@ type Messages = Message[]
           <button 
           style={{backgroundColor:chatbot.secondaryColor}}
           disabled={!prompt&& true}
-          className={`absolute right-4 text-white top-1/2 -translate-y-1/2 flex items-center justify-center text-2xl h-10 min-w-10 px-1  transition bg-transparent shadow-md rounded-full ${!prompt ? 'opacity-30 cursor-not-allowed': 'active:scale-90 cursor-pointer'} `}>
+          className={`absolute right-4 text-white top-1/2 -translate-y-1/2 flex items-center justify-center text-2xl h-10 min-w-10 px-1  transition bg-transparent shadow-md rounded-full ${!prompt  ? 'opacity-30 cursor-not-allowed': 'active:scale-90 cursor-pointer'} `}>
             <i className="ri-arrow-up-double-line"></i>
           </button>
         </form>

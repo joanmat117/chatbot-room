@@ -31,6 +31,9 @@ try{
 
   const response = await together.chat.completions.create({
   messages: messages,
+  //meta-llama/Llama-3.3-70B-Instruct-Turbo-Free
+  //deepseek-ai/DeepSeek-R1-0528
+  //deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free
   model: 'meta-llama/Llama-3.3-70B-Instruct-Turbo-Free',
   stream:true,
 
