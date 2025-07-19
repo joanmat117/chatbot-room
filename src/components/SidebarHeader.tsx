@@ -68,8 +68,8 @@ export function SidebarHeader(){
                   <div className="overflow-hidden p-1">
                     <div className="flex flex-col gap-1 text-3xl pt-2 pr-3">
                       {
-                        Object.entries(chatbotsData).map(([chatbotId,chatbot])=>{
-                          return <NavItem icon={chatbot.icon} to={`/chat/${chatbotId}`} className="text-sm">{chatbot.name}</NavItem>
+                        Object.entries(chatbotsData).map(([chatbotId,chatbot],index)=>{
+                          return <NavItem key={index} icon={chatbot.icon} to={`/chat/${chatbotId}`} className="text-sm">{chatbot.name}</NavItem>
                         })
                       }
                     </div>

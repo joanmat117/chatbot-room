@@ -19,22 +19,26 @@ type Messages = Message[]
   const chatContainerRef = useRef<HTMLElement>(null)
   const [prompt,setPrompt]=useState('')
   const [messages,setMessages]=useState<Messages>([])
-  const {response,isLoading,error,generateResponse} = useAI()
+  const {response,isLoading,error,generateResponse,cancelGeneration} = useAI()
 
   
   //Execute when the chatbot change
   useRefChange(chatbot.name,()=>{
     sessionStorage.removeItem('messages')
     setMessages([])
+    cancelGeneration()
   })
   
   
   //   Functions
   const addMessagesToChat = (role:'user' | 'assistant',content:string)=>{
-      if(messages[messages.length - 1] && messages[messages.length - 1].role !== role) 
-      setMessages(prev=>[...prev,{role,content}]) 
-      else setMessages(prev=>[...prev.slice(0,-1),{role,content}])
-    sessionStorage.setItem("messages",JSON.stringify(messages))
+    setMessages(prev => {
+      const newMessages = prev[prev.length - 1] && prev[prev.length - 1].role !== role 
+        ? [...prev, {role, content}]
+        : [...prev.slice(0, -1), {role, content}];
+      sessionStorage.setItem("messages", JSON.stringify(newMessages));
+      return newMessages;
+  });
 
   }
   
@@ -42,7 +46,8 @@ type Messages = Message[]
     e.preventDefault()
     if(!prompt || isLoading) return
     setMessages(prev=>[...prev,{role:'user',content:prompt}])
-    generateResponse({prompt,system:chatbot.contextMessage})
+    generateResponse({prompt,system:chatbot.contextMessage,messages})
+    setPrompt('')
   }
 
   //   Effects
