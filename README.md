@@ -76,7 +76,7 @@ Sigue estos pasos para ejecutar el proyecto en tu máquina local:
 
 1.  **Clona el repositorio:**
     ```bash
-    git clone https://github.com/joanmatias/chatbot-room.git Room.git
+    git clone https://github.com/joanmatias/chatbot-room.git
     ```
 
 2.  **Navega al directorio del proyecto:**
@@ -97,40 +97,10 @@ Sigue estos pasos para ejecutar el proyecto en tu máquina local:
     npm run dev
     # o
     yarn dev
-    # o
-    pnpm run dev
     ```
 
 5.  **Abre tu navegador:**
-    Visita [`http://localhost:5172`](http://localhost:5173) (o el puerto que indique Vite en tu terminal).
-
-## 📁 Estructura del Proyecto
-
-El proyecto está organizado de manera lógica para facilitar la escalabilidad y el mantenimiento:
-```
-Chatbot Room/
-├── public/
-│ ├── bg-pattern-stars.svg
-│ └── ... (otros assets públicos)
-├── src/
-│ ├── components/
-│ │ ├── ChatbotCard.tsx
-│ │ ├── PromptComparison.tsx
-│ │ ├── TableOfContents.tsx
-│ │ └── ... (otros componentes reutilizables)
-│ ├── layouts/
-│ │ └── AppLayout.tsx
-│ ├── pages/
-│ │ ├── ChatbotsPage.tsx
-│ │ ├── PromptGuidePage.tsx
-│ │ └── ... (otras páginas principales)
-│ ├── App.tsx
-│ ├── index.css
-│ └── main.tsx
-├── package.json
-├── tailwind.config.js
-└── README.md
-```
+    Visita [`http://localhost:5173`](http://localhost:5173) (o el puerto que indique Vite en tu terminal).
 
 ## 🤝 ¿Cómo Contribuir?
 
