@@ -18,7 +18,6 @@
   <a href="#-características-principales">Características</a> •
   <a href="#-tecnologías-utilizadas">Tecnologías</a> •
   <a href="#-instalación-y-puesta-en-marcha">Instalación</a> •
-  <a href="#-estructura-del-proyecto">Estructura</a> •
   <a href="#-licencia">Licencia</a>
 </p>
 
