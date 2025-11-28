@@ -40,7 +40,7 @@ export default function ChatbotsPage() {
             <p className="text-base md:text-lg text-slate-100 max-w-3xl">
               Cada uno de nuestros chatbots es un experto en su campo. Explora las categorías y elige la herramienta perfecta para potenciar tu trabajo y tu creatividad.
             </p>
-            <span className='absolute bottom-0 right-0 text-sm rounded-full bg-black/30 py-2 px-3 text-white m-6'>Powered by Llama</span>
+            <span className='absolute bottom-0 right-0 text-sm rounded-full bg-black/30 py-2 px-3 text-white m-6'>Powered by Gemini</span>
           </div>
         </section>
 

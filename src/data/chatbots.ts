@@ -16,7 +16,7 @@ export const chatbotsData: Record<ChatbotsId, Chatbot> = {
     icon: "compass-3-line",
     primaryColor: "#6366f1",
     secondaryColor: "#9333ea",
-    contextMessage: "Eres Omni Assistant, un asistente multidisciplinario con conocimiento en todos los campos. Responde de manera clara y concisa, adaptándote al nivel del usuario. Si no sabes algo, sé honesto pero ofrece ayudar a investigar. Respondele usando la sintaxis markdown para expresarte de una mejor forma"
+    contextMessage: "Eres Omni Assistant, un asistente multidisciplinario con conocimiento en todos los campos. Responde de manera clara y concisa, adaptándote al nivel del usuario."
   },
   finance: {
     name: "Finance Guru",

@@ -1,18 +1,14 @@
 import { UserMessage } from './chat/UserMessage';
 import { AiMessage } from './chat/AiMessage';
 import { useContext, useEffect, useRef, useState, type FormEvent} from 'react';
-import { useAI } from '../hooks/useAI';
+import { useIA } from '../hooks/useAI';
 import { ChatPlaceholder } from './chat/ChatPlaceholder';
 import { SkeletonChatAi } from './skeletons/SkeletonChatAi';
 import { ChatbotContext } from '../contexts/ChatbotContext';
 import { scrollToBottom } from '../utils/scrollToBottom';
 import { useRefChange } from '../hooks/useRefChange';
 import { MDToHTML } from './MDToHTML';
-import { trimMessages } from '../utils/trimmedMessages';
 
-type Message = {role: 'user' | 'assistant', content: string}
-type Messages = Message[]
-  
   export default function ChatbotMain() {
 
   //   States & Refs & Contexts
@@ -20,57 +16,27 @@ type Messages = Message[]
   const chatContainerRef = useRef<HTMLElement>(null)
   const [prompt,setPrompt]=useState('')
   const inputRef = useRef<HTMLTextAreaElement>(null)
-  const [messages,setMessages]=useState<Messages>([])
-  const {response,isLoading,error,generateResponse,cancelGeneration} = useAI()
+  const {history,isLoading,sendMessage,resetHistory} = useIA({iaKey:`ia-history-${chatbot.name}`,system:chatbot.contextMessage})
 
   
   //Execute when the chatbot change
   useRefChange(chatbot.name,()=>{
-    cancelGeneration()
-    sessionStorage.removeItem('messages')
-    setMessages([])
+    resetHistory()
   })
-  
-  
-  //   Functions
-  const addMessagesToChat = (role:'user' | 'assistant',content:string)=>{
-    setMessages(prev => {
-      const newMessages = prev[prev.length - 1] && prev[prev.length - 1].role !== role 
-        ? [...prev, {role, content}]
-        : [...prev.slice(0, -1), {role, content}];
-      sessionStorage.setItem("messages", JSON.stringify(newMessages));
-      return newMessages;
-  });
 
-  }
+  useEffect(()=>{
+    if(history && history.length > 0 && history[history.length-1].role === 'user') scrollToBottom(chatContainerRef)
+  },[history])
   
+  
+    
   const handleSubmit = async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     if(!prompt || isLoading) return
     if(inputRef.current) inputRef.current.value = ""
-    setMessages(prev=>[...prev,{role:'user',content:prompt}])
-    generateResponse({prompt,system:chatbot.contextMessage,messages: trimMessages(messages)})
+    sendMessage(prompt)  
   }
 
-  //   Effects
-  useEffect(()=>{
-    if(error){
-      if(error == "UnknownError") addMessagesToChat('assistant',"Reintentalo mas tarde, hubo un error")
-      if(error == "NetworkError") addMessagesToChat('assistant',"Revisa tu conexion a internet")
-    }
-    if(response){
-      addMessagesToChat('assistant',response)
-    }
-  },[response,error])
-
-  useEffect(()=>{
-    if(sessionStorage.getItem('messages')) 
-      setMessages(JSON.parse(sessionStorage.getItem('messages') as string))
-  },[])
-
-  useEffect(()=>{
-  scrollToBottom(chatContainerRef)
-  },[messages])
 
 
   return (
@@ -78,20 +44,20 @@ type Messages = Message[]
       <main ref={chatContainerRef} className="animate-entering flex flex-col h-full w-full overflow-x-hidden scroll-smooth overflow-y-auto p-4 md:p-6 mb-32 space-y-8">
         
         {
-          messages.length > 0?
-          messages.map((message,index)=>{
+          history.length > 0?
+          history.map((message,index)=>{
             return message.role == 'user' ?
-            <UserMessage key={index}>{message.content}</UserMessage> : 
+            <UserMessage key={index}>{message.parts[0].text}</UserMessage> : 
             <AiMessage key={index}>
               <MDToHTML>
-                {message.content}
+                {message.parts[0].text}
                 </MDToHTML>
               </AiMessage>
           }) :
           <ChatPlaceholder icon={chatbot.icon} name={chatbot.name}/>
         }
 
-        {isLoading && messages.length > 0 && messages[messages.length - 1].role == 'user' && 
+        {isLoading && history.length > 0 && history[history.length - 1].role == 'user' && 
          (<AiMessage className="animate-slide-in-blurred-left">
           <SkeletonChatAi/>
          </AiMessage>)

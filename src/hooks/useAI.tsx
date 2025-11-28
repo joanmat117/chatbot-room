@@ -1,75 +1,77 @@
-// src/hooks/useAI.ts
-
-import { useState, useRef, useEffect, useCallback } from "react";
-import { fetchAiApi, type MessagesType } from "../services/fetchAiApi";
+import { sendIA, type AiHistory } from "../services/ia-api";
+import { useEffect, useState } from "react";
 
 interface Params {
-    prompt: string;
-    system: string;
-    messages: MessagesType;
+    system:string,
+    iaKey:string
 }
 
-export const useAI = () => {
-    const [response, setResponse] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<null | string>(null);
+function getSessionHistory (historyKey:string):AiHistory{
+    return JSON.parse(sessionStorage.getItem(historyKey)as string) || []
+}
+function setSessionHistory (text:AiHistory,historyKey:string){
+    return sessionStorage.setItem(historyKey,JSON.stringify(text))
+}
 
-    // useRef para mantener una referencia al AbortController entre renders
-    const abortControllerRef = useRef<AbortController | null>(null);
+export function useIA({system,iaKey}:Params){
+    const [history,setHistory] = useState<AiHistory>(getSessionHistory(iaKey))
+    const [isLoading,setIsloading] = useState(false)
 
-    // useEffect para la limpieza automática cuando el componente se desmonta.
-    // Esto previene errores y fugas de memoria.
-    useEffect(() => {
-        return () => {
-            abortControllerRef.current?.abort();
-        };
-    }, []);
+    useEffect(()=>{
+        setSessionHistory(history,iaKey)
+    },[history])
 
-    const generateResponse = useCallback(async ({ prompt, system ,messages}: Params) => {
-        // Cancela cualquier solicitud en curso antes de iniciar una nueva.
-        if (abortControllerRef.current) {
-            abortControllerRef.current.abort();
+    useEffect(()=>{
+
+        if(history && history.length > 0 && history[history.length-1].role === 'user'){
+            const getIAResponse = async()=>{
+                try {
+                    setIsloading(true)
+                    const res = await sendIA(history,system)as string
+                    setHistory(prev=>[...prev,{
+                        role:'model',
+                        parts: [{text: res}]
+                    }])
+                } catch(e){
+                    console.log(e)
+                    setHistory(prev=>[...prev,{
+                        role:'model',
+                        parts: [{text: 'Hubo un error al obtener la respuesta :('}]
+                    }])
+                } finally {
+                    setIsloading(false)
+                }
+            }
+            getIAResponse()
+
         }
 
-        // Crea un nuevo controlador para la solicitud actual.
-        abortControllerRef.current = new AbortController();
-        const signal = abortControllerRef.current.signal;
+    }
+    ,[history,system])
 
-        setIsLoading(true);
-        setError(null);
-        setResponse("");
+    const resetHistory = ()=>{
+        setHistory([])
+    }
 
-        try {
-            const stream = fetchAiApi({ prompt, system , history: messages}, signal);
+    const sendMessage = (prompt:string)=>{
+        if(isLoading) return
+        setHistory(prev=>{
+
+            if(prev){
             
-            for await (const token of stream) {
-                setResponse(prev => prev + token);
-            }
-
-        } catch (e:any) {
-            // Identifica si el error es por una cancelación intencionada.
-            if (e.name === 'AbortError') {
-                console.log("Solicitud abortada desde el hook.");
-            } else if (e instanceof Error) {
-                console.error("Error en la API: ", e);
-                setError("Ocurrió un error de red.");
+            return [...prev,{
+                role:'user',
+                parts: [{text: prompt}]
+                }]
             } else {
-                console.error("Error desconocido: ", e);
-                setError("Ocurrió un error desconocido.");
+                return [{
+                role:'user',
+                parts: [{text: prompt}]
+                }]
             }
-        } finally {
-            setIsLoading(false);
-            abortControllerRef.current = null;
-        }
-    }, []);
-
-    // Función para cancelar la generación manualmente (ej: desde un botón).
-    const cancelGeneration = useCallback(() => {
-        if (abortControllerRef.current) {
-            abortControllerRef.current.abort();
-            setIsLoading(false);
-        }
-    }, []);
-
-    return { response, isLoading, error, generateResponse, cancelGeneration };
-};
+    })
+        
+    }
+    
+    return {sendMessage,history,isLoading,resetHistory}
+}
