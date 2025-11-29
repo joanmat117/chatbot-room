@@ -10,7 +10,7 @@ export type AiHistory = AiHistoryMessage[];
 export async function sendIA(history: AiHistory, systemMessage: string) {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   const model = 'gemini-2.0-flash'; 
-  const endpoint = `https://chatbot-room.vercel.app/api/proxy/?url=https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`; [3]
+  const endpoint = `https://yoandri.vercel.app/api/proxy/?url=https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`; [3]
 
   const requestBody = {
     contents: history,
