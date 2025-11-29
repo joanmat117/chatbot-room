@@ -17,7 +17,6 @@ export function MDToHTML({ children }: { children: string }) {
               style={oneDark}
               language={match[1]}
               PreTag="div"
-              showLineNumbers
               wrapLines
               customStyle={{
                 margin: '0',

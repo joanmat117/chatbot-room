@@ -52,7 +52,7 @@ html {
 
 /* styles.css o global.css */
 .markdown-text {
-  @apply text-gray-800; /* Color base */
+  @apply text-gray-800 overflow-auto; /* Color base */
 }
 
 /* Encabezados */
@@ -85,11 +85,23 @@ html {
 
 /* Bloques de código (si usas react-syntax-highlighter) */
 .markdown-text pre {
-  @apply text-white border my-3 p-0 overflow-auto whitespace-normal rounded-2xl;
+  @apply text-white max-w-full border my-3 p-0 overflow-auto rounded-2xl;
 }
 
-.markdown-text pre code {
-    @apply bg-transparent overflow-auto text-sm 
+.markdown-text pre div {
+  @apply min-w-0 w-full 
+}
+
+.markdown-text pre div code {
+    @apply bg-transparent whitespace-normal text-sm 
+}
+
+.markdown-text pre div code > span {
+  @apply  max-w-full whitespace-pre-line
+}
+
+.markdown-text pre div code span {
+  @apply   min-w-0 max-w-full break-all
 }
 
 .markdown-text *:first-child {

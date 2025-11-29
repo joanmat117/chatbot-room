@@ -1,6 +1,6 @@
 import { UserMessage } from './chat/UserMessage';
 import { AiMessage } from './chat/AiMessage';
-import { useContext, useEffect, useRef, useState, type FormEvent} from 'react';
+import { useContext, useEffect, useRef, type FormEvent} from 'react';
 import { useIA } from '../hooks/useAI';
 import { ChatPlaceholder } from './chat/ChatPlaceholder';
 import { SkeletonChatAi } from './skeletons/SkeletonChatAi';
@@ -14,7 +14,6 @@ import { MDToHTML } from './MDToHTML';
   //   States & Refs & Contexts
   const chatbot = useContext(ChatbotContext)
   const chatContainerRef = useRef<HTMLElement>(null)
-  const [prompt,setPrompt]=useState('')
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const {history,isLoading,sendMessage,resetHistory} = useIA({iaKey:`ia-history-${chatbot.name}`,system:chatbot.contextMessage})
 
@@ -32,8 +31,10 @@ import { MDToHTML } from './MDToHTML';
     
   const handleSubmit = async(e: FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
+    if(!inputRef.current) return
+    const prompt = inputRef.current.value
     if(!prompt || isLoading) return
-    if(inputRef.current) inputRef.current.value = ""
+    inputRef.current.value = ""
     sendMessage(prompt)  
   }
 
@@ -72,7 +73,6 @@ import { MDToHTML } from './MDToHTML';
             ref={inputRef}
             name="prompt"
             autoComplete='off'
-            onChange={(e)=>setPrompt(e.target.value)}
             style={{borderColor: chatbot.secondaryColor}}
             placeholder={`Escribe un mensaje a ${chatbot.name}...`}
             className="w-full h-full border-r-3 border-l-3 shadow pr-20 p-4  bg-slate-50 text-slate-800  border-slate-600 rounded-2xl [scrollbar-width:none] [-webkit-scrollbar]:hidden] resize-none outline-none transition placeholder:text-slate-400"

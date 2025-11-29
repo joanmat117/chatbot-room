@@ -23,7 +23,7 @@ export function AiMessage({ children,className}: Props) {
   };
 
   return (
-    <div className={`flex w-full ${className}`}>
+    <div className={`flex animate-show-with-opacity w-full ${className}`}>
       <div className="max-w-xl md:max-w-3xl w-full flex gap-2 relative group">
         <div 
         style={{color: chatbot.secondaryColor}}

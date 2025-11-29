@@ -16,7 +16,7 @@ export function UserMessage({ children}:Props){
       style={{
         backgroundColor: chatbot.secondaryColor
       }}
-      className="max-w-[90%] md:max-w-2xl w-fit flex justify-end gap-3 text-white px-4 py-2 rounded-4xl rounded-tr-md text-md prose prose-sm prose-invert">
+      className="max-w-[90%] md:max-w-2xl w-fit flex justify-end gap-3 text-white px-4 py-2 rounded-xl rounded-tr-md text-md prose prose-sm prose-invert">
             {children}
       </div>
     </div>
