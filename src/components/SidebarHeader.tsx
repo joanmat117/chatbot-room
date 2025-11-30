@@ -21,7 +21,7 @@ export function SidebarHeader(){
         <button 
             onClick={() => setIsMenuOpen(true)} 
             className="text-2xl flex justify-center cursor-pointer transition hover:scale-95 items-center relative rounded-full shadow border-primary-600 size-10 border-r-2" 
-            aria-label="Abrir menú" 
+            aria-label="Abrir menu" 
             aria-expanded={isMenuOpen}
         >
             <i className='ri-menu-2-line'></i>
@@ -39,7 +39,7 @@ export function SidebarHeader(){
             <button 
               onClick={() => setIsMenuOpen(false)}
               className="text-2xl flex justify-center items-center z-50 relative rounded-full shadow border-primary-600 size-10 border-l-2 cursor-pointer hover:scale-95 transition"
-              aria-label="Cerrar menú"
+              aria-label="Cerrar menu"
             >
               <i className='ri-close-line'></i>
             </button>
@@ -59,6 +59,7 @@ export function SidebarHeader(){
                 <button
                   onClick={() => setIsChatbotsMenuOpen(!isChatbotsMenuOpen)}
                   className="flex  w-fit text-left px-3 bg-slate-50 py-2 text-slate-600 hover:bg-slate-100 transition-colors duration-200 rounded-full shadow"
+                  aria-label="toggle submenu"
                   aria-expanded={isChatbotsMenuOpen}>
                   <i className={`ri-arrow-down-s-line text-2xl transition-transform duration-300 ${isChatbotsMenuOpen ? 'rotate-180' : ''}`}></i>
                 </button>

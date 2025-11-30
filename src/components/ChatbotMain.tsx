@@ -1,7 +1,7 @@
 import { UserMessage } from './chat/UserMessage';
 import { AiMessage } from './chat/AiMessage';
 import { useContext, useEffect, useRef, type FormEvent} from 'react';
-import { useIA } from '../hooks/useAI';
+import { useIA } from '@/hooks/useAI';
 import { ChatPlaceholder } from './chat/ChatPlaceholder';
 import { SkeletonChatAi } from './skeletons/SkeletonChatAi';
 import { ChatbotContext } from '../contexts/ChatbotContext';
