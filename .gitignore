@@ -1,28 +1,45 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-.env
-.env*
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Operating System files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.vercel
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
+# IDE and Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Build artifacts
+build/
+bin/
+obj/
+dist/
+target/
+*.log
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Environment variables and sensitive data
+.env
+.env.*
+config.local.js
+secrets.yaml
+
+# Compiled files and executables
+*.pyc
+*.o
+*.a
+*.so
+*.dll
+*.exe
