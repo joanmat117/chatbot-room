@@ -3,7 +3,7 @@ import {render,screen,fireEvent, cleanup} from '@testing-library/react'
 import {SidebarHeader} from '@/components/SidebarHeader'
 import { MemoryRouter } from 'react-router-dom'
 
-describe('Test SideBar',()=>{
+describe('Testing SideBar',()=>{
   beforeEach(()=>{
     cleanup()
     render(

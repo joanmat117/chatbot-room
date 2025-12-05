@@ -72,6 +72,7 @@ import { MDToHTML } from './MDToHTML';
           <textarea
             ref={inputRef}
             name="prompt"
+            aria-label='prompt input'
             autoComplete='off'
             style={{borderColor: chatbot.secondaryColor}}
             placeholder={`Escribe un mensaje a ${chatbot.name}...`}
@@ -80,7 +81,9 @@ import { MDToHTML } from './MDToHTML';
           />
           <button 
           style={{backgroundColor:chatbot.secondaryColor}}
-          disabled={!prompt&& true}
+          role='button'
+          aria-label='submit prompt'
+          disabled={!prompt&& true ||isLoading}
           className={`absolute right-4 text-white top-1/2 -translate-y-1/2 flex items-center justify-center text-2xl h-10 min-w-10 px-1  transition bg-transparent shadow-md rounded-full ${!prompt  ? 'opacity-30 cursor-not-allowed': 'active:scale-90 cursor-pointer'} `}>
             <i className="ri-arrow-up-double-line"></i>
           </button>

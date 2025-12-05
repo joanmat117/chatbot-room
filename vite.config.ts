@@ -12,7 +12,9 @@ export default defineConfig({
     port: 5173,
   },
   test: {
-    environment: 'jsdom'
+    environment: 'jsdom',
+    globals:true,
+    setupFiles: "./src/test/setup.ts"
   },
   resolve: {
     alias: {
