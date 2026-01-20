@@ -1,25 +1,8 @@
 # Chatbot Room: Un Universo de Asistentes de IA
-<!--
-todo: cada un mensaje, no responde nada da una respuesta sin datos del texto de la respuetas,quizas hay que usar otro metodo que no sea generateContent
-{
-  "usageMetadata": {
-    "promptTokenCount": 441,
-    "totalTokenCount": 441,
-    "promptTokensDetails": [
-      {
-        "modality": "TEXT",
-        "tokenCount": 441
-      }
-    ]
-  },
-  "modelVersion": "gemini-2.0-flash-lite",
-  "responseId": "2FwnacO-FN-s_uMPs-LJ-AI"
-}
---->
 
 
 ![Banner de Chatbot Room](https://i.ibb.co/8Df7nKb4/Screenshot-2025-07-10-at-17-44-05-Chatbot-Room.png) 
-<!-- Reemplaza la URL de arriba con una imagen de banner que puedes crear tú mismo -->
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
@@ -43,10 +26,7 @@ todo: cada un mensaje, no responde nada da una respuesta sin datos del texto de 
 
 ## 🚀 Demo
 
-[**Ver Demo en Vivo**](https://chatbotroom.vercel.app) 
-<!-- Reemplaza esta URL con el enlace a tu web una vez desplegada -->
-
-![Captura de pantalla de Chatbot Room](./screenshot.png)
+[**Ver Demo en Vivo**](https://chatbot-room.vercel.app) 
 
 ## ✨ Características Principales
 
